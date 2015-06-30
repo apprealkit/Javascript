@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/apprealkit.nocache.js"></script>
+<style>
+hr {
+  	border: 0;
+  	width: 100%;
+  	color: #f00;
+	background-color: #f00;
+	height: 2px;
+}
+span { font-weight: bold; }
+.curr {cursor:pointer;}
+td {padding:5px;}
+</style>
+</head>
+<body>
+	<p>API Host : <strong>api.apprealkit.com</strong> (<span id="spnReady" style="color:red;"></span>)</p>
+    <p>API Port : <strong>8080</strong></p>
+    <p>Login UserID: <input type="text" id="txtLoginID" value="1234"/> (any string)</p>
+    <p>Member UserID: <input type="text" id="txtMemberID" value="5678"/> (any string)</p>
+    <p>APP ID : <input type="text" id="txtAppID" value="" style="width:350px;"/></p>
+    <p>APP Secret : <input type="text" id="txtAppSecret" value=""/></p> 
+    <p><input type="button" class="curr" id="btSetProduct" value="Set App ID and App Secret" /> (<strong style="color:red;">1</strong>)</p>    
+    <hr/>   
+    <h1>Connect</h1>
+    <p><input type="button" class="curr" id="btConnect" value="Connect to AppRealKit" /> (<strong style="color:red;">2</strong>)&nbsp;<span id="spnConnect"></span></p>
+    <p><input type="button" class="curr" id="btAuthenticate" value="Autheticate Login UserID" /> (<strong style="color:red;">3</strong>)&nbsp;<span id="spnAuthenticate"></span></p>
+    <hr/>   
+    <h1>Account</h1>
+    <p><input type="button" class="curr" id="btGetLogin" value="Get Login Profile" /></p>
+    <p><pre id="spnLoginProfile"></pre></p>
+    <table border="1" style="width:80%;">
+    	<tr>
+        	<td>Stamina</td>
+            <td><input type="text" id="txtStamina" value="1"/></td>
+        </tr>
+        <tr>
+        	<td>Exp</td>
+            <td><input type="text" id="txtExp" value="1"/></td>
+        </tr>
+        <tr>
+        	<td>Level</td>
+            <td><input type="text" id="txtLevel" value="1"/></td>
+        </tr>
+        <tr>
+        	<td>Coin</td>
+            <td><input type="text" id="txtCoin" value="1"/></td>
+        </tr> 
+        <tr>
+        	<td>Diamond</td>
+            <td><input type="text" id="txtDiamond" value="1"/></td>
+        </tr> 
+        <tr>
+        	<td>Point</td>
+            <td><input type="text" id="txtPoint" value="1"/></td>
+        </tr>
+        <tr>
+        	<td>Capacity</td>
+            <td><input type="text" id="txtCapacity" value="1"/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btUpdatePoint" value="Update Point For LoginID" /></p>
+    			<p><pre id="spnUpdatePoint"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><input type="button" class="curr" id="btGetListUsers" value="Get List Profile" /></p>
+    <p><pre id="spnListUsers"></pre></p>
+    <p><input type="button" class="curr" id="btGetLeaderBoard" value="Get Leader Board" /></p>
+    <p><pre id="spnLeaderBoard"></pre></p>
+    <p><input type="button" class="curr" id="btNotifyUsers" value="Notify for Login & Member ID" /> (All devices of Login & Member ID who receive this notification)</p>
+    <p><pre id="spnNotifyUsers"></pre></p>
+    <hr/>   
+    <h1>ROOM</h1>
+    <p><strong>Create Room</strong></p>
+    <table border="1" style="width:80%;">
+    	<tr>
+        	<td>Name</td>
+            <td><input type="text" id="txtRoomName" value=""/></td>
+        </tr>
+        <tr>
+        	<td>Description</td>
+            <td><input type="text" id="txtRoomDesc" value=""/></td>
+        </tr>
+        <tr>
+        	<td>Capacity</td>
+            <td><input type="text" id="txtCapacityRoom" value="0"/> (0=unlimited)</td>
+        </tr>
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btCreateRoom" value="Create Room" /></p>
+    			<p><pre id="spnCreateRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><strong>Join Room</strong></p>
+    <table border="1" style="width:80%;">
+    	<tr>
+        	<td>MemberID</td>
+            <td><input type="text" id="txtUserID" value=""/></td>
+        </tr>  
+        <tr>
+        	<td>RoomID</td>
+            <td><input type="text" id="txtRoomID" value=""/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btJoinRoom" value="Join Room" /></p>
+    			<p><pre id="spnJoinRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><strong>Leave Room</strong></p>
+    <table border="1" style="width:80%;">
+    	<tr>
+        	<td>MemberID</td>
+            <td><input type="text" id="txtUserIDLeave" value=""/></td>
+        </tr>  
+        <tr>
+        	<td>RoomID</td>
+            <td><input type="text" id="txtRoomIDLeave" value=""/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btLeaveRoom" value="Leave Room" /></p>
+    			<p><pre id="spnLeaveRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><strong>Get Room</strong></p>
+    <table border="1" style="width:80%;">    	
+        <tr>
+        	<td>RoomID</td>
+            <td><input type="text" id="txtRoomIDGet" value=""/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btGetRoom" value="Leave Room" /></p>
+    			<p><pre id="spnGetRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><strong>Get List Room</strong></p>
+    <table border="1" style="width:80%;">    	
+        <tr>
+        	<td>MemberID</td>
+            <td><input type="text" id="txtMemberIDGetList" value=""/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btGetListRoom" value="Get List Room Of Member" /></p>
+    			<p><pre id="spnGetListRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <p><strong>Notify In Room</strong></p>
+    <table border="1" style="width:80%;">    	
+        <tr>
+        	<td>RoomID</td>
+            <td><input type="text" id="txtRoomIDNotify" value=""/></td>
+        </tr>      
+        <tr>
+        	<td colspan="2" align="center">
+            	<p><input type="button" class="curr" id="btNotifyRoom" value="Notify in Room" /></p>
+    			<p><pre id="spnNotifyRoom"></pre></p>
+            </td>
+        </tr>
+    </table>
+    <script language="javascript">					
+		/**
+		* Callback function which execute after opening the connection
+		*/
+		function onKitOpen(jsonMessage, iCode) {			
+			$('#spnConnect').html("the connection is ready for using. Please set AppID and AppSecret!");
+		}
+		
+		/**
+		* Callback function which execute when get the message from servers
+		*/
+		function onKitMessage(jsonMessage, iCode) {			
+			alert(jsonMessage);
+		}
+		
+		/**
+		* Callback function which execute after sending message
+		*/
+		function onKitSent(jsonMessage, iCode) {
+			//alert("Ready to sent message to this connection");
+		}
+		
+		/**
+		* Callback function which execute after closing the connection
+		*/
+		function onKitClose(jsonMessage, iCode) {			
+			alert("Ready to close this connection");
+		}
+	
+		/**
+		* Callback function which execute when start AppRealKit
+		*/
+		function arkReady() {
+			//Debug mode
+			arkb.setVerbose(true);
+			
+			//Read connect
+			$('#spnReady').html("READY TO CONNECT to AppRealKit Cloud");
+		}	
+		
+		//Bind all events
+		$( document ).ready(function() {
+			$('#btSetProduct').click(function() {
+				if($('#txtAppID').val().length == 0) {
+					alert("Please add your AppID !");
+					$('#txtAppID').focus();
+					return false;
+				}
+				if($('#txtAppSecret').val().length == 0) {
+					alert("Please add your AppSecret !");
+					$('#txtAppSecret').focus();
+					return false;
+				}
+				arkb.setProductID($('#txtAppID').val(), $('#txtAppSecret').val());
+				alert("Set your AppID and AppSecret is Success");
+			});
+			
+			$('#btConnect').click(function() {
+				arkb.connect("api.apprealkit.com", 8080);
+			});
+			
+			$('#btAuthenticate').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+				
+				if(arkb.isConnected() == false) {
+					alert("Please connect to AppRealKit before!");
+					return false;
+				}
+				
+				arkb.authenticate(loginID, function(jsonMessage, iCode) {
+					alert(jsonMessage);
+				});
+			});
+			
+			$('#btGetLogin').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+				
+				if(arkb.isConnected() == false) {
+					alert("Please connect to AppRealKit before!");
+					return false;
+				}
+				
+				arkb.getUser(loginID, function(jsonMessage, iCode) {
+					$('#spnLoginProfile').html(jsonMessage);
+				});
+			});
+			
+			$('#btNotifyUsers').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+				
+				var memberID = $('#txtMemberID').val();
+				if(memberID.length == 0) {
+					alert("Please add member ID");
+					$('#memberID').focus();
+					return false;
+				}
+				
+				if(arkb.isConnected() == false) {
+					alert("Please connect to AppRealKit before!");
+					return false;
+				}
+				
+				var arrMember = [loginID, memberID];
+				var code = 0;
+				var reason = "Notify for " + loginID + "," + memberID + " form JAVASCRIPT";
+				var ignoreMeFlg = true;
+				
+				arkb.notifyListUser(arrMember, code, reason, ignoreMeFlg, function(jsonMessage, iCode) {
+					$('#spnNotifyUsers').html(jsonMessage);
+				});
+			});
+			
+			$('#btGetListUsers').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+				
+				var memberID = $('#txtMemberID').val();
+				if(memberID.length == 0) {
+					alert("Please add member ID");
+					$('#memberID').focus();
+					return false;
+				}
+				
+				if(arkb.isConnected() == false) {
+					alert("Please connect to AppRealKit before!");
+					return false;
+				}
+				
+				var arrMember = [loginID, memberID];								
+				arkb.getListUser(arrMember, function(jsonMessage, iCode) {
+					$('#spnListUsers').html(jsonMessage);
+				});
+			});
+			
+			$('#btGetLeaderBoard').click(function() {
+				var orderBy = $('#txtLoginID').val();
+								
+				if(arkb.isConnected() == false) {
+					alert("Please connect to AppRealKit before!");
+					return false;
+				}
+												
+				arkb.getLeaderBoard(orderBy, function(jsonMessage, iCode) {
+					$('#spnLeaderBoard').html(jsonMessage);
+				});
+			});
+			
+			$('#btCreateRoom').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+			
+				var roomName = $('#txtRoomName').val();
+				if(roomName.length == 0) {
+					alert("Please add room name");
+					$('#txtRoomName').focus();
+					return false;
+				}
+				
+				var roomDesc = $('#txtRoomDesc').val();
+				if(roomDesc.length == 0) {
+					alert("Please add room description");
+					$('#txtRoomDesc').focus();
+					return false;
+				}
+				
+				var iCapacity = $('#txtCapacityRoom').val();
+				if(parseInt(iCapacity) < 0) {
+					alert("Please add capacity >= 0");
+					$('#txtCapacityRoom').focus();
+					return false;
+				}
+				
+				var properties = {
+					'name' : roomName,
+					'description' : roomDesc
+				};
+				
+				arkb.createRoom(loginID, properties, iCapacity, function(jsonMessage, iCode) {
+					$('#spnCreateRoom').html(jsonMessage);
+				});
+			});
+			
+			$('#btJoinRoom').click(function() {
+				var userID = $('#txtUserID').val();
+				if(userID.length == 0) {
+					alert("Please add member ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+				
+				var roomID = $('#txtRoomID').val();
+				if(roomID.length == 0) {
+					alert("Please add room ID");
+					$('#txtRoomID').focus();
+					return false;
+				}
+							
+				arkb.joinRoom(userID, roomID, function(jsonMessage, iCode) {
+					$('#spnJoinRoom').html(jsonMessage);
+				});
+			});
+			
+			$('#btLeaveRoom').click(function() {
+				var userID = $('#txtUserIDLeave').val();
+				if(userID.length == 0) {
+					alert("Please add member ID to Leave");
+					$('#txtLoginIDLeave').focus();
+					return false;
+				}
+				
+				var roomID = $('#txtRoomIDLeave').val();
+				if(roomID.length == 0) {
+					alert("Please add room ID to Leave");
+					$('#txtRoomIDLeave').focus();
+					return false;
+				}
+							
+				arkb.joinRoom(userID, roomID, function(jsonMessage, iCode) {
+					$('#spnLeaveRoom').html(jsonMessage);
+				});
+			});
+			
+			$('#btGetRoom').click(function() {								
+				var roomID = $('#txtRoomIDGet').val();
+				if(roomID.length == 0) {
+					alert("Please add room ID to Get");
+					$('#txtRoomIDGet').focus();
+					return false;
+				}
+							
+				arkb.getRoom(roomID, function(jsonMessage, iCode) {
+					$('#spnGetRoom').html(jsonMessage);
+				});
+			});
+			
+			$('#btGetListRoom').click(function() {								
+				var memberID = $('#txtMemberIDGetList').val();
+				if(memberID.length == 0) {
+					alert("Please add list room ID of memberID");
+					$('#txtMemberIDGetList').focus();
+					return false;
+				}
+							
+				arkb.getListRoom(memberID, function(jsonMessage, iCode) {
+					$('#spnGetListRoom').html(jsonMessage);
+				});
+			});			
+			
+			$('#btNotifyRoom').click(function() {								
+				var roomID = $('#txtRoomIDNotify').val();
+				if(roomID.length == 0) {
+					alert("Please add room ID to notify");
+					$('#txtRoomIDNotify').focus();
+					return false;
+				}
+				
+				var code = 0;
+				var reason = "Notify by room = " + roomID + " form JAVASCRIPT";
+				var ignoreMeFlg = true;
+							
+				arkb.notifyInRoom(roomID, code, reason, ignoreMeFlg, function(jsonMessage, iCode) {
+					$('#spnGetListRoom').html(jsonMessage);
+				});
+			});
+			
+			$('#btUpdatePoint').click(function() {
+				var loginID = $('#txtLoginID').val();
+				if(loginID.length == 0) {
+					alert("Please add login ID");
+					$('#txtLoginID').focus();
+					return false;
+				}
+			
+				var iStamina = parseInt($('#txtStamina').val());
+				var iExp = parseInt($('#txtExp').val());
+				var iLevel = parseInt($('#txtLevel').val());
+				var iCoin = parseInt($('#txtCoin').val());
+				var iDiamond = parseInt($('#txtDiamond').val());
+				var iPoint = parseInt($('#txtPoint').val());
+				var iCapacity = parseInt($('#txtCapacity').val());
+				var pointlist =  {
+					'stamina':iStamina, 
+					'exp':iExp, 
+					'level':iLevel, 
+					'coin':iCoin, 
+					'diamond':iDiamond, 
+					'point':iPoint, 
+					'capacity':iCapacity
+				};
+				
+				arkb.updatePoint(loginID, pointlist, function(jsonMessage, iCode) {
+					$('#spnGetListRoom').html(jsonMessage);
+				});
+			});
+		});
+	</script>
+</body>
+</html>
